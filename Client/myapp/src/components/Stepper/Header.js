@@ -3,12 +3,12 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Grid from "@material-ui/core/Grid";
 
-function GlobalHeader({ handleNext, handleBack, handleClose, step}) {
+function GlobalHeader({ handleChange1, handleBack, handleClose, step}) {
     const check =()=>{
         if(step===2){
             handleClose()
         }else{
-            handleNext()
+            handleChange1()
         }
     }
     return (

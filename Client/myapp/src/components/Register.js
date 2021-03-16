@@ -23,7 +23,7 @@ function Registor() {
   ]);
 
   const [data, setData] = useState([
-    { name: ' ', surname: ' ', birthYear: '', birthCity: '' },
+    { name: 'zariyaab', surname: 'muheeb ', birthYear: '2015', birthCity: 'karachi' },
     { name: ' ', surname: ' ', birthYear: '', birthCity: '' },
   ]);
 

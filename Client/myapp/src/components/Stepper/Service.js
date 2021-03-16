@@ -1,10 +1,13 @@
 import React from 'react'
 import { makeStyles } from "@material-ui/core/styles";
-import { FormControl, Grid, InputAdornment, InputLabel, MenuItem, OutlinedInput, Select, TextField } from '@material-ui/core'
+import {
+    FormControl, Grid, InputAdornment, InputLabel,
+    MenuItem, OutlinedInput, Select, TextField
+} from '@material-ui/core'
 import GlobalHeader from './Header';
 import Button from '@material-ui/core/Button';
 
-function Service({handleBack,handleNext, step, handleClose}) {
+function Service({ handleBack, handleNext, step, handleClose }) {
     const useStyles = makeStyles((theme) => ({
         root: {
             flexGrow: 1,
@@ -20,9 +23,9 @@ function Service({handleBack,handleNext, step, handleClose}) {
         },
         root: {
             '& > *': {
-              margin: theme.spacing(1),
+                margin: theme.spacing(1),
             },
-          },
+        },
 
     }));
     const classes = useStyles();
@@ -47,23 +50,22 @@ function Service({handleBack,handleNext, step, handleClose}) {
         CreatedUser: "Admin",
         ModifyUser: "Admin"
     })
-    const handleSubmit = e => {
-        e.preventDefault();
- const data = {
-        "Header":{"MRNo":"MR-0000000015","TokenNo":"14",
-        "ServiceDate":"2021-02-28T14:19:32.164Z","Ward":"Ward# 2",
-        "Amount":1222,"TotalAmount":1222,"PatientContribution":"dd","Remarks":"dsad",
-        "CreatedUser":"Admin","ModifyUser":"Admin"},
-    }
-  };
+    const handleSubmit = () => {
+        const data = Header;
+        console.log(data);
+        // axios
+        handleNext();
+    };
     return (
         <div>
             <Grid onSubmit={handleSubmit}>
-              <h1>Service <GlobalHeader handleNext={handleNext} handleBack={handleBack} step={step} handleClose={handleClose}/>
-              <button type="submit" className="myButton">Save</button>
-              </h1>
-      </Grid>
-    
+                <h1 className="a">Service </h1>
+                <GlobalHeader handleChange1={handleSubmit}
+                    handleBack={handleBack} step={step} handleClose={handleClose} />
+                <button type="submit" className="myButton">Save</button>
+
+            </Grid>
+
             <fieldset>
                 <legend>
                     Contant

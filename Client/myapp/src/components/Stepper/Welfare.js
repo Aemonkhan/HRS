@@ -2,10 +2,13 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import NumberFormat from 'react-number-format';
-import { FormControl, InputLabel, MenuItem, TextField, Select, FormControlLabel, Radio, FormLabel, RadioGroup, Checkbox, InputAdornment, Input, OutlinedInput } from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, TextField, Select,
+   FormControlLabel, Radio, FormLabel, RadioGroup, Checkbox,
+    InputAdornment, Input, OutlinedInput } from '@material-ui/core';
 import GlobalHeader from './Header';
 import MaterialTable from 'material-table';
 import { tableIcons } from '../Editable/TableIcons'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,10 +59,46 @@ export default function NestedGrid({ handleNext, handleBack }) {
   const handleAmount = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
+  const [Header, setHeader] = useState({
+    MRNo: "",
+    TokenNo: "",
+    WelfareDate: new Date(),
+    Profession: "",
+    Fiqa: "",
+    Education: '',
+    Cast: "",
+    MonthlyIncome: 0,
+    Guardian: "",
+    OtherInfo: "",
+    MaleKids: "",
+    FemaleKids: "",
+    OtherKids: "",
+    Brothers: "",
+    Sisters: "",
+    NoOFFamilyMembers: "",
+    IsMarried: false,
+    IsAbleToPay: false,
+    IsEarning: false,
+    HaveGold: false,
+    ReqName: '',
+    ReqPhone: "",
+    ReqRelationWithPatient: '',
+    CreateUser: "Admin",
+    ModifyUser: "Admin",
+})
+
+const handleSubmit = () => {
+  const data = Header;
+  console.log(data);
+  // axios
+  handleNext();
+};
 
   return (
     <div className={classes.root}>
-     <h1>Welfare <GlobalHeader handleNext={handleNext} handleBack={handleBack} /></h1>
+     <h1  className="a">Welfare </h1>
+     <GlobalHeader handleChange1={handleSubmit} handleBack={handleBack} />
+     <button type="submit"  className="myButton">Save</button>
       <form>
         <Grid container spacing={3}>
           <Grid container item xs={3} spacing={3}>

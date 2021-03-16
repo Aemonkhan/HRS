@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import NumberFormat from "react-number-format";
-import { FormControl, InputLabel, MenuItem, TextField, Select, FormControlLabel, Radio, FormLabel, RadioGroup } from '@material-ui/core';
+import { FormControl, InputLabel, MenuItem, TextField, Select,
+     FormControlLabel, Radio, FormLabel, RadioGroup } from '@material-ui/core';
 import GlobalHeader from "./Header";
 import Checkbox from '@material-ui/core/Checkbox';
+import { blueGrey } from "@material-ui/core/colors";
 
 const Registration = ({ handleNext, handleBack }) => {
     const useStyles = makeStyles((theme) => ({
@@ -20,9 +22,9 @@ const Registration = ({ handleNext, handleBack }) => {
             margin: theme.spacing(1),
             minWidth: 200,
         },
-
+    
     }));
-    const [checked, setChecked] = React.useState(true);
+    const [checked, setChecked] = React.useState(false);
 
     // const handleChange = (event) => {
     //   setChecked(event.target.checked);
@@ -57,17 +59,20 @@ const Registration = ({ handleNext, handleBack }) => {
         IsPAFEmp: false,
         IsRejected: false,
     });
-    console.log(handleBack, handleNext);
+    // console.log(handleBack, handleNext);
     const handleSubmit = () => {
-        // check empty field
-        //api 
+        const data = Header;
+        console.log(data);
+        // axios
         handleNext();
-        console.log(Header)
+      
     }
     return (
         <div className={classes.root}>
-            <h1>Registration<GlobalHeader handleNext={handleSubmit} /></h1>
-            <form>
+            <h1 className="a">Registration</h1>
+            <GlobalHeader handleChange1={handleSubmit}  />
+             <button type="submit" className="myButton" className="b">Save</button>
+            <form >
                 <Grid container spacing={3}>
                     <Grid container item xs={3} spacing={3}>
                         <TextField id='outlined-basic' label='Mr #' variant='outlined'
@@ -245,18 +250,18 @@ const Registration = ({ handleNext, handleBack }) => {
                     <Grid container item xs={3} spacing={0}>
                         <Grid container item xs={3} spacing={0} >
                             <Checkbox
-                                defaultChecked
                                 color="primary"
                                 value={Header.IsStaff}
                                 id=" IsStaff"
+                                label=" IsStaff"
                                 onChange={(e) => setHeader({ ...Header, IsStaff: e.target.value })}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                         </Grid>
                         <Grid container item xs={3} spacing={0} >
                             <Checkbox
-                                defaultChecked
                                 color="primary"
+                                label="Is PAF employee"
                                 value={Header.IsPAFEmp}
                                 id="IsPAFEmp"
                                 onChange={(e) => setHeader({ ...Header, IsPAFEmp: e.target.value })}
@@ -265,8 +270,8 @@ const Registration = ({ handleNext, handleBack }) => {
                         </Grid>
                         <Grid container item xs={3} spacing={0} >
                             <Checkbox
-                                defaultChecked
                                 color="primary"
+                                label=" IsRejected"
                                 value={Header.IsRejected}
                                 id=" IsRejected"
                                 onChange={(e) => setHeader({ ...Header, IsRejected: e.target.value })}
