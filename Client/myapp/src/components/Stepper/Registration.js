@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import NumberFormat from "react-number-format";
-import { FormControl, InputLabel, MenuItem, TextField, Select,
-     FormControlLabel, Radio, FormLabel, RadioGroup } from '@material-ui/core';
+import {
+    FormControl, InputLabel, MenuItem, TextField, Select,
+    FormControlLabel, Radio, FormLabel, RadioGroup
+} from '@material-ui/core';
 import GlobalHeader from "./Header";
 import Checkbox from '@material-ui/core/Checkbox';
 import { blueGrey } from "@material-ui/core/colors";
+import axios from "axios";
 
 const Registration = ({ handleNext, handleBack }) => {
     const useStyles = makeStyles((theme) => ({
@@ -22,7 +25,7 @@ const Registration = ({ handleNext, handleBack }) => {
             margin: theme.spacing(1),
             minWidth: 200,
         },
-    
+
     }));
     const [checked, setChecked] = React.useState(false);
 
@@ -47,7 +50,7 @@ const Registration = ({ handleNext, handleBack }) => {
         Name: "",
         FatherOrHusband: "",
         DOB: new Date(),
-        Age: "",
+        Age: 0,
         Gender: "",
         Religion: "",
         HousNo: "",
@@ -62,30 +65,50 @@ const Registration = ({ handleNext, handleBack }) => {
     // console.log(handleBack, handleNext);
     const handleSubmit = () => {
         const data = Header;
-        console.log(data);
+        console.log(Header);
+        axios.post('http://localhost:4000/api/registration/add', Header)
+            .then(res => {
+                console.log(Header);
+                console.log(res);
+                handleNext();
+            })
+            .catch(err => console.log(err, 'error'));
         // axios
-        handleNext();
-      
+
     }
     return (
         <div className={classes.root}>
             <h1 className="a">Registration</h1>
-            <GlobalHeader handleChange1={handleSubmit}  />
-             <button type="submit" className="myButton" className="b">Save</button>
+            <GlobalHeader handleChange1={handleSubmit} />
+            <button type="submit" className="myButton" className="b">Save</button>
             <form >
                 <Grid container spacing={3}>
-                    <Grid container item xs={3} spacing={3}>
-                        <TextField id='outlined-basic' label='Mr #' variant='outlined'
-                            value={Header.MRNo} id="MRNo"
-                            onChange={(e) => setHeader({ ...Header, MRNo: e.target.value })} />
-
+                    <Grid container item xs={3} spacing={0}>
+                        <FormControl variant="outlined-label" className={classes.formControl}>
+                            <FormLabel id="demo-simple-select-outlined-label" >MRNo:
+                            </FormLabel>
+                            <NumberFormat format="#####"
+                                value={Header.MRNo}
+                                id=" MRNo"
+                                onChange={(e) => setHeader({ ...Header, MRNo: e.target.value })}
+                            />
+                        </FormControl>
                     </Grid>
                     <Grid container item xs={3} spacing={3}>
-                        <TextField id='outlined-basic' label='TokenNo' variant='outlined'
+                        {/* <TextField id='outlined-basic' label='TokenNo' variant='outlined'
                             value={Header.TokenNo}
                             id="TokenNo"
-                            onChange={(e) => setHeader({ ...Header, TokenNo: e.target.value })}
-                        />
+                            onChange={(e) => setHeader({ ...Header, TokenNo: Number(e.target.value) })}
+                        /> */}
+                        <FormControl variant="outlined-label" className={classes.formControl}>
+                            <FormLabel id="demo-simple-select-outlined-label" >TokenNo:
+                            </FormLabel>
+                            <NumberFormat format="###" label='TokenNo'
+                                value={Header.TokenNo}
+                                id=" TokenNo"
+                                onChange={(e) => setHeader({ ...Header, TokenNo: Number(e.target.value) })}
+                            />
+                        </FormControl>
 
                     </Grid>
                     <Grid container item xs={3} spacing={3}>
@@ -140,7 +163,7 @@ const Registration = ({ handleNext, handleBack }) => {
                     <Grid container item xs={3} spacing={0}>
                         <TextField id='outlined-basic' label='Age' variant='outlined'
                             value={Header.Age} id="Age"
-                            onChange={(e) => setHeader({ ...Header, Age: e.target.value })}
+                            onChange={(e) => setHeader({ ...Header, Age: Number(e.target.value) })}
                         />
 
                     </Grid>
@@ -176,9 +199,9 @@ const Registration = ({ handleNext, handleBack }) => {
                             >
                                 <MenuItem value="">
                                 </MenuItem>
-                                <MenuItem value={10}></MenuItem>
-                                <MenuItem value={20}>Muslim</MenuItem>
-                                <MenuItem value={30}>Non Muslim</MenuItem>
+                                <MenuItem value={""}></MenuItem>
+                                <MenuItem value={"Muslim"}>Muslim</MenuItem>
+                                <MenuItem value={"Non Muslim"}>Non Muslim</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -187,9 +210,9 @@ const Registration = ({ handleNext, handleBack }) => {
                             <FormLabel component="legend">Help Type</FormLabel>
                             <RadioGroup row aria-label="gender" name="gender1"
                                 //  value={value} onChange={handleChange}
-                                value={Header.Zakat}
+                                value={Header.IsZakat}
                                 id="TokenNo"
-                                onChange={(e) => setHeader({ ...Header, Zakat: e.target.value })}
+                                onChange={(e) => setHeader({ ...Header, IsZakat: e.target.value })}
                             >
                                 <FormControlLabel value="Zakat" control={<Radio />} label="Zakat" />
                                 <FormControlLabel value="Welfare" control={<Radio />} label="Welfare" />
@@ -247,31 +270,31 @@ const Registration = ({ handleNext, handleBack }) => {
                     <legend>
                         Staff
                          </legend>
-                    <Grid container item xs={3} spacing={0}>
-                        <Grid container item xs={3} spacing={0} >
+                    <Grid container item xs={6} spacing={0}>
+                        <Grid container item xs={4} spacing={0} >
+                            <InputLabel item xs={12} spacing={0}>IsStaff</InputLabel>
                             <Checkbox
                                 color="primary"
                                 value={Header.IsStaff}
                                 id=" IsStaff"
-                                label=" IsStaff"
-                                onChange={(e) => setHeader({ ...Header, IsStaff: e.target.value })}
+                                onChange={(e) => setHeader({ ...Header, IsStaff: !Header.IsStaff })}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                         </Grid>
-                        <Grid container item xs={3} spacing={0} >
+                        <Grid container item xs={4} spacing={0} >
+                            <InputLabel item xs={12} spacing={0}>IsPAFEmp</InputLabel>
                             <Checkbox
                                 color="primary"
-                                label="Is PAF employee"
                                 value={Header.IsPAFEmp}
                                 id="IsPAFEmp"
                                 onChange={(e) => setHeader({ ...Header, IsPAFEmp: e.target.value })}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                         </Grid>
-                        <Grid container item xs={3} spacing={0} >
+                        <Grid container item xs={4} spacing={0} >
+                            <InputLabel item xs={12} spacing={0}>IsRejected</InputLabel>
                             <Checkbox
                                 color="primary"
-                                label=" IsRejected"
                                 value={Header.IsRejected}
                                 id=" IsRejected"
                                 onChange={(e) => setHeader({ ...Header, IsRejected: e.target.value })}

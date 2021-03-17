@@ -1,11 +1,13 @@
 import React from 'react'
 import { makeStyles } from "@material-ui/core/styles";
 import {
-    FormControl, Grid, InputAdornment, InputLabel,
+    FormControl, FormLabel, Grid, InputAdornment, InputLabel,
     MenuItem, OutlinedInput, Select, TextField
 } from '@material-ui/core'
 import GlobalHeader from './Header';
 import Button from '@material-ui/core/Button';
+import axios from "axios";
+import NumberFormat from 'react-number-format';
 
 function Service({ handleBack, handleNext, step, handleClose }) {
     const useStyles = makeStyles((theme) => ({
@@ -52,7 +54,13 @@ function Service({ handleBack, handleNext, step, handleClose }) {
     })
     const handleSubmit = () => {
         const data = Header;
-        console.log(data);
+      console.log(Header);
+        axios.Service('http://localhost:4000/api/service/add',Header)
+          .then(res => {
+            console.log('successful');
+          })
+          .catch(err => console.log(err, 'error'));
+      
         // axios
         handleNext();
     };
@@ -71,8 +79,16 @@ function Service({ handleBack, handleNext, step, handleClose }) {
                     Contant
                          </legend>
                 <Grid container item xs={3} spacing={3}>
-                    <Grid item xs={4} spacing={6}>
-                        <TextField id='outlined-basic' label='M.R. #' variant='outlined' />
+                <Grid container item xs={3} spacing={0}>
+                        <FormControl variant="outlined-label" className={classes.formControl}>
+                            <FormLabel id="demo-simple-select-outlined-label"
+                                value={Header.MRNo}
+                                id=" MRNo"
+                                onChange={(e) => setHeader({ ...Header, MRNo: e.target.value })}
+                            >MRNo:
+           <NumberFormat format="#####" />
+                            </FormLabel>
+                        </FormControl>
                     </Grid>
                     <Grid item xs={6} spacing={0}>
                         <TextField id='outlined-basic' label='Token #' variant='outlined' />

@@ -1,27 +1,30 @@
 const mongoose = require('mongoose');
 const registrationSchema = mongoose.Schema({
-    title: {type:String, required:[true, "title is missing"] },
-    MRNo: Number,
+    MRNo: String,
     TokenNo: Number,
-    RegistrationDate: {    type: Date,
-        default: new Date()},
+    RegistrationDate: {
+        type: Date,
+        default: new Date()
+    },
     Name: String,
     FatherOrHusband: String,
-    DOB:{    type: Date,
-        default: new Date()},
+    DOB: {
+        type: Date,
+        default: new Date()
+    },
     Age: Number,
     Gender: String,
     Religion: String,
-    HousNo: Number,
+    HousNo: String,
     Address: String,
-    CNIC: Number,
+    CNIC: String,
     RefBy: String,
-    IsZakat: Boolean,
-    IsStaff:  Boolean,
-    IsPAFEmp:  Boolean,
-    IsRejected:  Boolean,
-    }
-    
+    IsZakat: String,
+    IsStaff: Boolean,
+    IsPAFEmp: Boolean,
+    IsRejected: Boolean,
+}
+
 )
 const Registration = mongoose.model('Registration', registrationSchema)
 module.exports = Registration

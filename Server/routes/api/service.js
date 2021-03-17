@@ -19,7 +19,7 @@ router.post('/add', async (req, res) => {
         res.json({
             success: true,
             status: 201,
-            dbid: post._id
+            dbid: service._id
         })
 
     } catch (error) {
