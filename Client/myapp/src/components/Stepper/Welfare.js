@@ -66,7 +66,7 @@ export default function NestedGrid({ handleNext, handleBack }) {
     TokenNo: "",
     WelfareDate: new Date(),
     Profession: "",
-    Fiqa: "",
+    Friqa: "",
     Education: '',
     Cast: "",
     MonthlyIncome: 0,
@@ -97,9 +97,9 @@ export default function NestedGrid({ handleNext, handleBack }) {
         console.log(Header);
         console.log(res);
         if (res.success === true) {
-
-          handleNext();
+          
         }
+        handleNext();
       })
       .catch(err => console.log(err, 'error'));
     // axios
@@ -125,7 +125,16 @@ export default function NestedGrid({ handleNext, handleBack }) {
             </FormControl>
           </Grid>
           <Grid container item xs={3} spacing={3}>
-            <TextField id='outlined-basic' label='TokenNo' variant='outlined' />
+          <FormControl variant="outlined-label" className={classes.formControl}>
+                            <FormLabel id="demo-simple-select-outlined-label" >TokenNo:
+                            </FormLabel>
+                            <NumberFormat format="###" label='TokenNo'
+                                value={Header.TokenNo}
+                                id=" TokenNo"
+                                onChange={(e) => setHeader({ ...Header, TokenNo: Number(e.target.value) })}
+                            />
+                        </FormControl>
+
 
           </Grid>
           <Grid container item xs={3} spacing={3}>

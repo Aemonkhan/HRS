@@ -54,16 +54,20 @@ function Service({ handleBack, handleNext, step, handleClose }) {
     })
     const handleSubmit = () => {
         const data = Header;
-      console.log(Header);
-        axios.Service('http://localhost:4000/api/service/add',Header)
+        console.log(Header);
+        axios.post('http://localhost:4000/api/welfare/add', Header)
           .then(res => {
-            console.log('successful');
+            console.log(Header);
+            console.log(res);
+            if (res.success === true) {
+              
+            }
+            handleNext();
           })
           .catch(err => console.log(err, 'error'));
-      
         // axios
-        handleNext();
-    };
+    
+      }
     return (
         <div>
             <Grid onSubmit={handleSubmit}>
@@ -78,20 +82,29 @@ function Service({ handleBack, handleNext, step, handleClose }) {
                 <legend>
                     Contant
                          </legend>
-                <Grid container item xs={3} spacing={3}>
-                <Grid container item xs={3} spacing={0}>
-                        <FormControl variant="outlined-label" className={classes.formControl}>
-                            <FormLabel id="demo-simple-select-outlined-label"
+                <Grid container item xs={6} spacing={0}>
+                <Grid  item xs={4} spacing={0}>
+                <FormControl variant="outlined-label" className={classes.formControl}>
+                            <FormLabel id="demo-simple-select-outlined-label" >MRNo:
+                            </FormLabel>
+                            <NumberFormat format="#####"
                                 value={Header.MRNo}
                                 id=" MRNo"
                                 onChange={(e) => setHeader({ ...Header, MRNo: e.target.value })}
-                            >MRNo:
-           <NumberFormat format="#####" />
-                            </FormLabel>
+                            />
                         </FormControl>
                     </Grid>
-                    <Grid item xs={6} spacing={0}>
-                        <TextField id='outlined-basic' label='Token #' variant='outlined' />
+                    <Grid item xs={6} spacing={1}>
+                    <FormControl variant="outlined-label" className={classes.formControl}>
+                            <FormLabel id="demo-simple-select-outlined-label" >TokenNo:
+                            </FormLabel>
+                            <NumberFormat format="###" label='TokenNo'
+                                value={Header.TokenNo}
+                                id=" TokenNo"
+                                onChange={(e) => setHeader({ ...Header, TokenNo: Number(e.target.value) })}
+                            />
+                        </FormControl>
+
                     </Grid>
                     <Grid item xs={4} spacing={0}>
                         <FormControl variant="outlined" className={classes.formControl}>

@@ -11,7 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { blueGrey } from "@material-ui/core/colors";
 import axios from "axios";
 
-const Registration = ({ handleNext, handleBack }) => {
+const Registration = ({ setresID, handleNext, handleBack }) => {
     const useStyles = makeStyles((theme) => ({
         root: {
             flexGrow: 1,
@@ -34,11 +34,10 @@ const Registration = ({ handleNext, handleBack }) => {
 
     const classes = useStyles();
 
-
     const { useState } = React;
     const [err, setErr] = useState("");
     const [value, setValue] = React.useState('female');
-
+    const [open, setOpen] = useState(false)
     const handleChange = (event) => {
         setValue(event.target.value);
     };
@@ -62,25 +61,92 @@ const Registration = ({ handleNext, handleBack }) => {
         IsPAFEmp: false,
         IsRejected: false,
     });
+    const validate = () => {
+        if (Header.TokenNo === '' || Header.TokenNo === undefined || Header.TokenNo === null) {
+            setErr('Token is missing')
+            setOpen(true)
+            return false;
+        }
+        else if (Header.TokenNo === '' || Header.TokenNo === undefined || Header.TokenNo === null) {
+            setErr('Token is missing')
+            setOpen(true)
+            return false;
+        }
+        // else if (Header.RegistrationDate === '' || Header.RegistrationDate === undefined || Header.RegistrationDate === null) {
+        //   setErr('RegistrationDate is missing')
+        //   return false;
+        // }
+        else if (Header.Name === '' || Header.Name === undefined || Header.Name === null) {
+            setErr('Name is missing')
+            return false;
+        }
+        // else if (Header.FatherOrHusband === '' || Header.FatherOrHusband === undefined || Header.FatherOrHusband === null) {
+        //   setErr('FatherOrHusband is missing')
+        //   return false;
+        // }
+        // else if (Header.DOB === '' || Header.DOB === undefined || Header.DOB === null) {
+        //   setErr('Date of Birth is missing')
+        //   return false;
+        // }
+        // else if (Header.Age === '' || Header.Age === undefined || Header.Age === null) {
+        //   setErr('Age is missing')
+        //   return false;
+        // }
+        // else if (Header.Gender === '' || Header.Gender === undefined || Header.Gender === null) {
+        //   setErr('Gender is missing')
+        //   return false;
+        // }
+        // else if (Header.Religion === '' || Header.Religion === undefined || Header.Religion === null) {
+        //   setErr('Religion is missing')
+        //   return false;
+        // }
+
+        // else if (Header.CNIC === '' || Header.CNIC === undefined || Header.CNIC === null) {
+        //   setErr('CNIC is missing')
+        //   return false;
+        // }
+
+        // else if (Header.HousNo === '' || Header.HousNo === undefined || Header.HousNo === null) {
+        //   setErr('House No is missing')
+        //   return false;
+        // }
+        // else if (Header.Address === '' || Header.Address === undefined || Header.Address === null) {
+        //   setErr('Address is missing')
+        //   return false;
+        // }
+        // else if (Header.Area === '' || Header.Area === undefined || Header.Area === null) {
+        //   setErr('Area is missing')
+        //   return false;
+        // }
+
+        // else if (Header.NOY === '' || Header.Name === undefined || Header.Name === null) {
+        //   setErr('NOY is missing')
+        //   return false;
+        // }
+        else {
+            return true;
+        }
+    }
     // console.log(handleBack, handleNext);
     const handleSubmit = () => {
         const data = Header;
+        const val = validate();
         console.log(Header);
-        axios.post('http://localhost:4000/api/registration/add', Header)
-            .then(res => {
-                console.log(Header);
-                console.log(res);
-                handleNext();
-            })
-            .catch(err => console.log(err, 'error'));
-        // axios
+        if (val === true) {
+            axios.post('http://localhost:4000/api/registration/add', Header)
+                .then(res => {
+                    handleNext()
+                })
+                .catch(err => console.log(err, 'err'))
+            // axios
 
+        }
     }
     return (
         <div className={classes.root}>
             <h1 className="a">Registration</h1>
             <GlobalHeader handleChange1={handleSubmit} />
-            <button type="submit" className="myButton" className="b">Save</button>
+            <button type="submit" className="myButton" className="b" onClick={handleSubmit}>Save</button>
             <form >
                 <Grid container spacing={3}>
                     <Grid container item xs={3} spacing={0}>
@@ -214,6 +280,7 @@ const Registration = ({ handleNext, handleBack }) => {
                                 id="TokenNo"
                                 onChange={(e) => setHeader({ ...Header, IsZakat: e.target.value })}
                             >
+
                                 <FormControlLabel value="Zakat" control={<Radio />} label="Zakat" />
                                 <FormControlLabel value="Welfare" control={<Radio />} label="Welfare" />
                             </RadioGroup>
